@@ -3,6 +3,7 @@ import threading
 import pickle
 from Crypto.Cipher import AES
 from secrets import token_bytes
+import rsa
 
 def AES_encrypt(message, key):
     '''
@@ -42,8 +43,9 @@ def sendMessage(sock):
         
         AES_key = token_bytes(16)
         cipherText, nonce, tag = AES_encrypt(message, AES_key)
+        encrypted_AES_key = rsa.encrypt(AES_key, partnerPublicKey)
 
-        data = pickle.dumps((AES_key, cipherText, nonce, tag))
+        data = pickle.dumps((encrypted_AES_key, cipherText, nonce, tag))
         sock.send(data)
 
     sock.close()
@@ -58,7 +60,8 @@ def receiveMessage(sock, sender):
             print(f"Closing connection.")
             break
 
-        AES_key, cipherText, nonce, tag = pickle.loads(data)
+        encrypted_AES_key, cipherText, nonce, tag = pickle.loads(data)
+        AES_key = rsa.decrypt(encrypted_AES_key, privateKey)
         message = AES_decrypt(cipherText, nonce, tag, AES_key)
 
         if not message:
@@ -67,6 +70,9 @@ def receiveMessage(sock, sender):
         print(f"Received from {sender}: {message}")
         
     sock.close()
+
+publicKey, privateKey = rsa.newkeys(1024) # Generate a RSA key pair.
+partnerPublicKey = None
 
 try:
     # The client creates a socket and connects to the host using the hosts IP and the chosen port.
@@ -78,6 +84,9 @@ try:
 
     print(f"Connected to {serverIP} on port:{port}")
     print(f'"exit" to close connection.')
+
+    client.send(publicKey.save_pkcs1("PEM"))
+    partnerPublicKey = rsa.PublicKey.load_pkcs1(client.recv(1024))
 
     # This starts 2 threads, 1 for recieving messages and one for sending messages.
     receiveThread = threading.Thread(target = receiveMessage, args=(client, "server"))
