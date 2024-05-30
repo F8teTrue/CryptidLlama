@@ -12,7 +12,8 @@ git clone https://github.com/F8teTrue/CryptidLlama.git
 **This is a rather large model that needs some very good hardware to run best. You can also use another model, but you will need to modify the code for the host/server. You can find models on [Hugging Face](https://huggingface.co/models)**
 
 When granted access to the model you can follow these steps to download it:
-Go into to models folder and do the following commands.
+
+Go into to models folder in the terminal and do the following commands.
 ```bash
 git lfs install
 ```
