@@ -29,3 +29,4 @@ This download can take a while.
 
 
 # License
+[LICENSE](LICENSE)
