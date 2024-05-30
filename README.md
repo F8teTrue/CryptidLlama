@@ -26,8 +26,47 @@ This download can take a while.
 ## Pip installations
 **This project was created using python 3.11**
 
-# Usage
+For both server and client:
+* RSA for encrypting AES key.
+```bash
+pip install rsa
+```
+* AES for encrypting prompts and responses.
+```bash
+pip install PyCryptodome
+```
+* Colorama for a better user interface in the terminal.
+```bash
+pip install colorama
+```
+For server only:
+* Transformers (for the AI model).
+```bash
+pip install Transformers
+```
+* Torch
 
+Go to [Torch website](https://pytorch.org/get-started/locally/) to download torch for your system.
+You will need to select **CUDA** as compute platform to run the model on the GPU.
+
+![Torch download options](README-pictures/Torch.png)
+
+# Usage
+Open up the repository folder in a terminal or PowerShell window.
+```
+cd path/to/folder
+```
+To run host (You might not need the 3.11):
+```bash
+python3.11 host.py
+```
+To run client:
+```bash
+python3.11 client.py
+```
+You will also need to specify the server's IP in the code for client
+
+**Before you can send in a prompt as client you will have to wait for the message that says "Server is ready."**
 
 # License
 [LICENSE](LICENSE)
