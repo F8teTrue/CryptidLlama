@@ -6,7 +6,6 @@ import sys, time
 from Crypto.Cipher import AES 
 from secrets import token_bytes
 import rsa, random
-import zalgolib as zl
 from zalgo_text import zalgo
 
 def AES_encrypt(message, key):
