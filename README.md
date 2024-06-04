@@ -39,6 +39,10 @@ pip install PyCryptodome
 ```bash
 pip install colorama
 ```
+* Zalgo_text from cryptid text
+```bash
+pip install zalgo-text
+```
 For server only:
 * Transformers (for the AI model).
 ```bash
