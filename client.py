@@ -5,7 +5,9 @@ from colorama import Fore, Style
 import sys, time
 from Crypto.Cipher import AES 
 from secrets import token_bytes
-import rsa
+import rsa, random
+import zalgolib as zl
+from zalgo_text import zalgo
 
 def AES_encrypt(message, key):
     """
@@ -30,14 +32,15 @@ def AES_decrypt(cipherText, nonce, tag, key):
         print("Message has been tampered with.") 
         return False
 
-def print_slow(str):
+def print_slow(string):
     """
     Prints a string character by character with a delay of 0.03 seconds.
     """
-    for letter in str:
-        sys.stdout.write(letter)
+    zalgo = zalgo.zalgo()
+    for letter in string:
+        sys.stdout.write(zalgo.zalgofy(letter) if random.random() > 0.65 else letter)
         sys.stdout.flush()
-        time.sleep(0.03)
+        time.sleep(0.01)
     
 def sendMessage(sock):
     """
